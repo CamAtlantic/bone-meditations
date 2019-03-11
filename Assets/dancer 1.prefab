@@ -645,7 +645,9 @@ MonoBehaviour:
   torsoRotationMin: -90
   headSlider: {fileID: 0}
   headRotationMax: 50
-  headRotationMin: -90
+  headRotationMin: -70
+  upperLeg: {fileID: 4696840069779466253}
+  lowerLeg: {fileID: 4696840069779466267}
 --- !u!1 &4696840069779466263
 GameObject:
   m_ObjectHideFlags: 0

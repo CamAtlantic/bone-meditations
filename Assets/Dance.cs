@@ -17,6 +17,11 @@ public class Dance : MonoBehaviour
     public float headRotationMax = 50;
     public float headRotationMin = -90;
 
+    LegControl legControl;
+    [Space(10)]
+    public GameObject upperLeg;
+    public GameObject lowerLeg;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +32,8 @@ public class Dance : MonoBehaviour
         headSlider.maxValue = headRotationMax;
         headSlider.minValue = headRotationMin;
         headSlider.value = 0;
+
+        legControl = FindObjectOfType<LegControl>();
     }
 
     // Update is called once per frame
@@ -44,5 +51,11 @@ public class Dance : MonoBehaviour
 
         Vector3 newHeadAngle = new Vector3(headValue, 0, 0);
         GameObject.Find("Head").transform.localRotation = Quaternion.Euler(newHeadAngle);
+
+        Vector3 newUpperLegAngle = new Vector3(legControl.upperLegAngle, 0, 0);
+        upperLeg.transform.localRotation = Quaternion.Euler(newUpperLegAngle);
+
+        Vector3 newLowerLegAngle = new Vector3(legControl.lowerLegAngle, 0, 0);
+        lowerLeg.transform.localRotation = Quaternion.Euler(newLowerLegAngle);
     }
 }
