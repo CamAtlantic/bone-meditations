@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4696840069782533123}
   - component: {fileID: 4696840069781403331}
   m_Layer: 0
-  m_Name: UpperLeg
+  m_Name: LUpperLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 4696840069782533133}
   - component: {fileID: 4696840069781403341}
   m_Layer: 0
-  m_Name: UpperLeg.001
+  m_Name: RUpperLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,6 +648,9 @@ MonoBehaviour:
   headRotationMin: -70
   upperLeg: {fileID: 4696840069779466253}
   lowerLeg: {fileID: 4696840069779466267}
+  contactLeg: {fileID: 4696840069779466265}
+  head: {fileID: 4696840069779466259}
+  torso: {fileID: 4696840069779466245}
 --- !u!1 &4696840069779466263
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +740,7 @@ GameObject:
   - component: {fileID: 4696840069782533145}
   - component: {fileID: 4696840069781403353}
   m_Layer: 0
-  m_Name: LowerLeg
+  m_Name: LLowerLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,7 +817,7 @@ GameObject:
   - component: {fileID: 4696840069782533147}
   - component: {fileID: 4696840069781403355}
   m_Layer: 0
-  m_Name: LowerLeg.001
+  m_Name: RLowerLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

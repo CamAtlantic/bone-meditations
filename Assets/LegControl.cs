@@ -34,13 +34,15 @@ public class LegControl : MonoBehaviour
 
     private void Update()
     {
+        //TODO: Make my own input checker to determine drag or not
+
         if (draggingUpperLeg)
         {
             Vector3 vector = Input.mousePosition -upperLegControl.position;
 
             float angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg - startAngle;
             angle += 90;
-            Debug.Log(angle);
+
             upperLegControl.transform.eulerAngles = new Vector3(0, 0, angle);
             upperLegAngle = angle;
         }
@@ -51,7 +53,6 @@ public class LegControl : MonoBehaviour
 
             float angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg - startAngle;
             angle += 90;
-            Debug.Log(angle);
 
             lowerLegAngle = angle - upperLegAngle;
             lowerLegControl.transform.eulerAngles = new Vector3(0, 0, angle);
