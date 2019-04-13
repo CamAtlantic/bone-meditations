@@ -18,10 +18,11 @@ public class Dance : MonoBehaviour
     public Slider headSlider;
     public float headRotationMax = 50;
     public float headRotationMin = -90;
+
     [Space(10)]
     [Header("Leg")]
  
-    LegControl legControl;
+    public LegControl legControl;
     public Slider legYSlider;
     public float legYMax = 87;
     public float legYMin = 0;
@@ -50,7 +51,6 @@ public class Dance : MonoBehaviour
         legYSlider.minValue = legYMin;
         legYSlider.value = 0;
 
-        legControl = FindObjectOfType<LegControl>();
     }
 
     // Update is called once per frame
