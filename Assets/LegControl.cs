@@ -61,7 +61,7 @@ public class LegControl : MonoBehaviour
             {
                 lowerLegAngle = 0;
                 lowerLegControl.transform.eulerAngles = new Vector3(0, 0, 0);
-
+                //this is not working properly
             }
             
 

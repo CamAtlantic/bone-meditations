@@ -26,6 +26,9 @@ public class Dance : MonoBehaviour
     public Slider legYSlider;
     public float legYMax = 87;
     public float legYMin = 0;
+    public Slider legZSlider;
+    public float legZMax = 87;
+    public float legZMin = 0;
     [Space(10)]
     [Header("Body Parts")]
     
@@ -51,6 +54,10 @@ public class Dance : MonoBehaviour
         legYSlider.minValue = legYMin;
         legYSlider.value = 0;
 
+        legZSlider.maxValue = legZMax;
+        legZSlider.minValue = legZMin;
+        legZSlider.value = 0;
+
     }
 
     // Update is called once per frame
@@ -60,6 +67,7 @@ public class Dance : MonoBehaviour
         float torsoValue = torsoSlider.value;
         float headValue = headSlider.value;
         float legYValue = legYSlider.value;
+        float legZValue = legZSlider.value;
 
 
         Vector3 contactLegPosition = contactLeg.transform.position;
@@ -71,7 +79,7 @@ public class Dance : MonoBehaviour
         Vector3 newHeadAngle = new Vector3(headValue, 0, 0);
         head.transform.localRotation = Quaternion.Euler(newHeadAngle);
 
-        Vector3 newUpperLegAngle = new Vector3(legControl.upperLegAngle, legYValue, 0);
+        Vector3 newUpperLegAngle = new Vector3(legControl.upperLegAngle, legYValue, legZValue);
         upperLeg.transform.localRotation = Quaternion.Euler(newUpperLegAngle);
 
         Vector3 newLowerLegAngle = new Vector3(legControl.lowerLegAngle, 0, 0);
