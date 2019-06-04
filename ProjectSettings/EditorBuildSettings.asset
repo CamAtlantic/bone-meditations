@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Studio.unity
     guid: 6b711361259fe2346bc6c6811de46e88
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TapStudio.unity
     guid: c71f3227ee18c5944a80ee9a9fa221c8
   m_configObjects: {}

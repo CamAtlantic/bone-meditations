@@ -8,51 +8,107 @@ public class TouchInputController : MonoBehaviour
     public GameObject touchIndicator;
     public Canvas canvas;
     public Text text;
+    [Space(10)]
+    public LayerMask touchInputMask;
 
     List<GameObject> indicators = new List<GameObject>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+    private List<GameObject> touchList = new List<GameObject>();
+    private GameObject[] touchesOld;
+
+    private RaycastHit hit;
 
     // Update is called once per frame
     void Update()
     {
 
+#if UNITY_EDITOR
 
-
-        if (Input.touches.Length > 0)
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)||Input.GetMouseButtonUp(0))
         {
-            Touch touch = Input.GetTouch(0);
-            Debug.Log(touch.position);
-            text.text = "touch position: " + touch.position.ToString();
+            touchesOld = new GameObject[touchList.Count];
+            touchList.CopyTo(touchesOld);
+            touchList.Clear();
 
-            if (indicators[0] == null)
+
+            foreach (Touch touch in Input.touches)
             {
-                indicators[0] = Instantiate(touchIndicator,canvas.transform);
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+
+                if (Physics.Raycast(ray, out hit, touchInputMask))
+                {
+                    GameObject recipient = hit.transform.gameObject;
+                    touchList.Add(recipient);
+
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        recipient.SendMessage("OnTouchDown", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        recipient.SendMessage("OnTouchUp", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                    if (Input.GetMouseButton(0))
+                    {
+                        recipient.SendMessage("OnTouchStay", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
             }
-            ((RectTransform)indicators[0].transform).anchoredPosition = touch.position;
 
-            /*
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 10, 9))
+            foreach (GameObject g in touchesOld)
             {
-                Debug.Log(hit.collider.gameObject.name);
-                hit.collider.gameObject.GetComponent<Material>().color =new Color(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1));
+                if (!touchList.Contains(g))
+                {
+                    g.SendMessage("OnTouchExit", hit.point, SendMessageOptions.DontRequireReceiver);
+                }
             }
-            */
         }
-        else
+#endif
+
+        if (Input.touchCount > 0)
         {
-            text.text = null;
-            foreach (GameObject obj in indicators)
+            touchesOld = new GameObject[touchList.Count];
+            touchList.CopyTo(touchesOld);
+            touchList.Clear();
+
+
+            foreach (Touch touch in Input.touches)
             {
-                Destroy(obj);
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+
+                if (Physics.Raycast(ray, out hit, touchInputMask))
+                {
+                    GameObject recipient = hit.transform.gameObject;
+                    touchList.Add(recipient);
+
+
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        recipient.SendMessage("OnTouchDown", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                    if (touch.phase == TouchPhase.Ended)
+                    {
+                        recipient.SendMessage("OnTouchUp", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                    if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+                    {
+                        recipient.SendMessage("OnTouchStay", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                    if (touch.phase == TouchPhase.Canceled)
+                    {
+                        recipient.SendMessage("OnTouchExit", hit.point, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+            }
+
+            foreach (GameObject g in touchesOld)
+            {
+                if (!touchList.Contains(g))
+                {
+                    g.SendMessage("OnTouchExit", hit.point, SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
-        
     }
 }

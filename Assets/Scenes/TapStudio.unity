@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 63557663}
   - component: {fileID: 63557662}
   - component: {fileID: 63557661}
+  - component: {fileID: 63557664}
   m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
@@ -384,6 +385,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63557659}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &63557664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63557659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17247c492f418a64494130cb9b85e289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 1, g: 1, b: 1, a: 0}
+  selectedColor: {r: 1, g: 0.16509432, b: 0.9773604, a: 0}
 --- !u!1 &150445122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,7 +3405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1070374698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5882,6 +5897,9 @@ MonoBehaviour:
     type: 3}
   canvas: {fileID: 1070374700}
   text: {fileID: 1970041936}
+  touchInputMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!4 &1975684165
 Transform:
   m_ObjectHideFlags: 0
