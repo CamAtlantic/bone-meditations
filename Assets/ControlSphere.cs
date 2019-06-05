@@ -9,6 +9,8 @@ public class ControlSphere : MonoBehaviour
     public Color selectedColor;
     Material mat;
 
+    float rotationSpeed = 0.1f;
+
     private void Start()
     {
         mat = GetComponent<Renderer>().material;
@@ -16,7 +18,6 @@ public class ControlSphere : MonoBehaviour
 
     void OnTouchDown()
     {
-        Debug.Log("registed touch!");
         mat.color = selectedColor;
     }
     void OnTouchUp()
@@ -31,4 +32,15 @@ public class ControlSphere : MonoBehaviour
     {
         mat.color = defaultColor;
     }
+
+    //================
+
+    void Rotate(Vector2 rotationVector)
+    {
+        //had to reverse the X and Y and do -Y for some reason here but it kinda works!
+        Vector2 newVector = new Vector2(rotationVector.y, -rotationVector.x);
+
+        transform.parent.Rotate(newVector*rotationSpeed,Space.World);
+    }
+
 }

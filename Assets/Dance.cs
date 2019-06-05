@@ -37,8 +37,30 @@ public class Dance : MonoBehaviour
     public GameObject upperLeg;
     public GameObject lowerLeg;
     public GameObject contactLeg;
+    public GameObject leftUpperArm;
+    public GameObject leftLowerArm;
+    public GameObject leftHand;
+    public GameObject rightUpperArm;
+    public GameObject rightLowerArm;
+    public GameObject rightHand;
 
+    [HideInInspector]
+    public List<GameObject> bodyParts = new List<GameObject>();
 
+    private void Awake()
+    {
+        bodyParts.Add(head);
+        bodyParts.Add(torso);
+        bodyParts.Add(upperLeg);
+        bodyParts.Add(lowerLeg);
+        bodyParts.Add(contactLeg);
+        bodyParts.Add(leftUpperArm);
+        bodyParts.Add(leftLowerArm);
+        bodyParts.Add(leftHand);
+        bodyParts.Add(rightUpperArm);
+        bodyParts.Add(rightLowerArm);
+        bodyParts.Add(rightHand);
+    }
     // Start is called before the first frame update
     void Start()
     {
