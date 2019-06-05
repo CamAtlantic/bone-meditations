@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TouchInputController : MonoBehaviour
 {
+    public Dance danceScript;
     public GameObject touchIndicator;
     public Canvas canvas;
     public Text text;
@@ -17,7 +18,7 @@ public class TouchInputController : MonoBehaviour
     Vector3 interactionStartWorldPos;
 
     //delta at which a swipe is triggered
-    float swipeDelta = 2f;
+    float swipeDeltaThreshold = 2f;
 
     // Update is called once per frame
     void Update()
@@ -52,10 +53,11 @@ public class TouchInputController : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
+                    ShowText("swipe: " + Input.touches[i].deltaPosition.x);
 
-                    if ( absXDelta >= swipeDelta)
+                    if ( absXDelta >= swipeDeltaThreshold)
                     {
-                        ShowText("swipe: " + absXDelta);
+                        danceScript.SendMessage("SwipeRotate", Input.touches[i].deltaPosition.x,SendMessageOptions.DontRequireReceiver);
                     }
 
                     if (objectInteractingWith)
@@ -94,36 +96,8 @@ public class TouchInputController : MonoBehaviour
             }
         }
 
-        //SCRAPHEAP===========================
-#if UNITY_EDITOR
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 mouseScreenPos = Input.mousePosition;
-            Debug.DrawLine(Vector3.zero, mouseWorldPos, Color.red);
-            RayCast(mouseScreenPos);
-        }
-#endif
     }
-
-
-    void RayCast(Vector3 screenPoint)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(screenPoint);
-        RaycastHit hit;
-
-        Physics.Raycast(ray, out hit);
-        if (hit.collider)
-        {
-            hit.collider.gameObject.SendMessage("OnTouchDown", SendMessageOptions.DontRequireReceiver);
-            ShowText(hit.collider.name);
-        }
-        else
-        {
-            ShowText("");
-        }
-    }
-
+    
     void ShowText(string value)
     {
         text.text = value;

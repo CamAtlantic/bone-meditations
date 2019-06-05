@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5368293120297842801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5368293120297842807}
+  - component: {fileID: 5368293120297842806}
+  m_Layer: 0
+  m_Name: TouchInputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5368293120297842807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368293120297842801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5369873, y: 1.9431763, z: 0.17456055}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5368293120297842806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368293120297842801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83cb4ac2815a01a46a4c0f6ecc2eb72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danceScript: {fileID: 1658404385, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
+  touchIndicator: {fileID: 3175652106495523661, guid: b229edb051b3eff44a2b9909359d6d27,
+    type: 3}
+  canvas: {fileID: 6000376338610067046, guid: 39d2b1e337c0cca41b73cc548afacbb1, type: 3}
+  text: {fileID: 0}
+  touchInputMask:
+    serializedVersion: 2
+    m_Bits: 512

@@ -82,10 +82,13 @@ public class Dance : MonoBehaviour
 
     }
 
+    //value passed in via SwipeRotate
+    float currentRotateSpeed = 0;
+
     // Update is called once per frame
     void Update()
     {
-        float rotateSpeed = speedSlider.value;
+        //float rotateSpeed = speedSlider.value;
         float torsoValue = torsoSlider.value;
         float headValue = headSlider.value;
         float legYValue = legYSlider.value;
@@ -93,7 +96,7 @@ public class Dance : MonoBehaviour
 
 
         Vector3 contactLegPosition = contactLeg.transform.position;
-        transform.RotateAround(contactLegPosition, new Vector3(0, 1f, 0), -rotateSpeed);
+        transform.RotateAround(contactLegPosition, new Vector3(0, 1f, 0), -currentRotateSpeed);
 
         Vector3 newHipAngle = new Vector3(torsoValue, 0, 0);
         torso.transform.localRotation = Quaternion.Euler(newHipAngle);
@@ -107,5 +110,25 @@ public class Dance : MonoBehaviour
         Vector3 newLowerLegAngle = new Vector3(legControl.lowerLegAngle, 0, 0);
         lowerLeg.transform.localRotation = Quaternion.Euler(newLowerLegAngle);
 
+    }
+
+
+    float deltaScale = 0.1f;
+    float friction = 0.7f;
+    float deadzone = 0.02f;
+
+    //called via SendMessage TouchInputController
+    void SwipeRotate(float swipeDelta)
+    {
+        swipeDelta *= deltaScale ;//cause it's really high values
+
+        currentRotateSpeed += swipeDelta;
+        currentRotateSpeed = Mathf.Clamp(currentRotateSpeed, -5, 5);
+        currentRotateSpeed *= 0.7f;
+        if(Mathf.Abs( currentRotateSpeed )<= 0.02f)
+        {
+            currentRotateSpeed = 0;
+
+        }
     }
 }
