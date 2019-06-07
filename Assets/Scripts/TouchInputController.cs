@@ -63,7 +63,6 @@ public class TouchInputController : MonoBehaviour
                     
                     
 
-                    //for use with Control Sphere atm, will need to change for tap to select parts
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
