@@ -44,8 +44,11 @@ public class Dance : MonoBehaviour
     public GameObject rightLowerArm;
     public GameObject rightHand;
 
+
+
     [HideInInspector]
     public List<GameObject> bodyParts = new List<GameObject>();
+
 
     private void Awake()
     {
@@ -82,12 +85,30 @@ public class Dance : MonoBehaviour
 
     }
 
+    [Space(10)]
+    [Header("Physics")]
     //value passed in via SwipeRotate
-    float currentRotateSpeed = 0;
+    public float currentRotateSpeed = 0;
+    public float friction = 0.7f;
+    public float deadzone = 0.02f;
+    public float maxSpeed = 15f;
+
+    bool isSpinning = false;
 
     // Update is called once per frame
     void Update()
     {
+        if (isSpinning)
+        {
+            currentRotateSpeed *= friction;
+            currentRotateSpeed = Mathf.Clamp(currentRotateSpeed, -maxSpeed, maxSpeed);
+            if (Mathf.Abs(currentRotateSpeed) <= deadzone)
+            {
+                currentRotateSpeed = 0;
+                isSpinning = false;
+            }
+        }
+
         //float rotateSpeed = speedSlider.value;
         float torsoValue = torsoSlider.value;
         float headValue = headSlider.value;
@@ -114,21 +135,21 @@ public class Dance : MonoBehaviour
 
 
     float deltaScale = 0.1f;
-    float friction = 0.7f;
-    float deadzone = 0.02f;
+    
+    void DirectRotate(float delta)
+    {
+        isSpinning = false;
+        float speed = Mathf.Clamp(delta, -maxSpeed, maxSpeed);
+
+        currentRotateSpeed = speed;
+        
+    }
 
     //called via SendMessage TouchInputController
-    void SwipeRotate(float swipeDelta)
+    void SwipeSpin(float swipeDelta)
     {
+        isSpinning = true;
         swipeDelta *= deltaScale ;//cause it's really high values
-
-        currentRotateSpeed += swipeDelta;
-        currentRotateSpeed = Mathf.Clamp(currentRotateSpeed, -5, 5);
-        currentRotateSpeed *= 0.7f;
-        if(Mathf.Abs( currentRotateSpeed )<= 0.02f)
-        {
-            currentRotateSpeed = 0;
-
-        }
+        currentRotateSpeed += swipeDelta;//add it to current so we don't lose values
     }
 }

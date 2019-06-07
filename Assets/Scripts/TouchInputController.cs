@@ -13,12 +13,14 @@ public class TouchInputController : MonoBehaviour
     public LayerMask touchInputMask;
 
     //interaction variables
-    GameObject objectInteractingWith;//call them handles?
+    GameObject objectInteractingWith;//TODO: make it work with 
     Vector3 interactionStartScreenPos;
     Vector3 interactionStartWorldPos;
 
     //delta at which a swipe is triggered
     float swipeDeltaThreshold = 2f;
+
+    Vector3[] touchStartScreenPositions = new Vector3[10];
 
     // Update is called once per frame
     void Update()
@@ -26,26 +28,30 @@ public class TouchInputController : MonoBehaviour
         for (int i = 0; i < Input.touchCount; i++)
         {
             //locations
-            Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
-            Vector3 touchScreenPos = Input.touches[i].position;
+            Vector3 latestWorldPos = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
+            Vector3 latestScreenPos = Input.touches[i].position;
             TouchPhase phase = Input.touches[i].phase;
 
             //raycast
-            Ray ray = Camera.main.ScreenPointToRay(touchScreenPos);
+            Ray ray = Camera.main.ScreenPointToRay(latestScreenPos);
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
             switch (phase)
             {
                 case TouchPhase.Began:
+                    //record where this touch began using its index
+                    touchStartScreenPositions[i] = latestScreenPos;
+
+
                     if (hit.collider)
                     {
                         GameObject hitObject = hit.collider.gameObject;
                         if (!objectInteractingWith)
                         {
                             objectInteractingWith = hitObject;
-                            interactionStartScreenPos = touchScreenPos;
-                            interactionStartWorldPos = touchWorldPos;
+                            interactionStartScreenPos = latestScreenPos;
+                            interactionStartWorldPos = latestWorldPos;
                             hitObject.SendMessage("OnTouchDown", SendMessageOptions.DontRequireReceiver);
                         }
                     }
@@ -53,27 +59,31 @@ public class TouchInputController : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
-                    ShowText("swipe: " + Input.touches[i].deltaPosition.x);
+                    float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
+                    ShowText("totalDelta: " + totalXDelta);
+                    
+                    
 
-                    if ( absXDelta >= swipeDeltaThreshold)
-                    {
-                        danceScript.SendMessage("SwipeRotate", Input.touches[i].deltaPosition.x,SendMessageOptions.DontRequireReceiver);
-                    }
-
+                    //for use with Control Sphere atm, will need to change for tap to select parts
                     if (objectInteractingWith)
                     {
-                        Vector3 interactionScreenDistance = touchScreenPos - interactionStartScreenPos;
-                        Vector3 interactionWorldDistance = touchWorldPos - interactionStartWorldPos;
-
-                        
-
-
-                        objectInteractingWith.SendMessage("Rotate", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
+                        objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
+                    }
+                    else
+                    {
+                        danceScript.SendMessage("DirectRotate", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
                 case TouchPhase.Stationary:
+                    //if finger is not moving, hold char still
+                    danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
+
                     break;
                 case TouchPhase.Ended:
+                    //on release, send swipe spin
+                    danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
+
+
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
