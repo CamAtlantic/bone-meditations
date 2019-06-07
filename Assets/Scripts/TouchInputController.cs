@@ -60,7 +60,6 @@ public class TouchInputController : MonoBehaviour
                 case TouchPhase.Moved:
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
                     float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
-                    ShowText("totalDelta: " + totalXDelta);
                     
                     
 
@@ -68,6 +67,7 @@ public class TouchInputController : MonoBehaviour
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
+                        ShowText(Input.touches[i].deltaPosition.ToString());
                     }
                     else
                     {
@@ -76,20 +76,23 @@ public class TouchInputController : MonoBehaviour
                     break;
                 case TouchPhase.Stationary:
                     //if finger is not moving, hold char still
+
                     danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
 
                     break;
                 case TouchPhase.Ended:
-                    //on release, send swipe spin
-                    danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
-
-
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
 
                         //end interaction, clean up
                         objectInteractingWith = null;
+                        ShowText("");
+                    }
+                    else
+                    {
+                        //on release, send swipe spin
+                        danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
                 case TouchPhase.Canceled:

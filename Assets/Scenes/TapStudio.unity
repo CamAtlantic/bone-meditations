@@ -914,6 +914,10 @@ PrefabInstance:
       propertyPath: friction
       value: 0.98
       objectReference: {fileID: 0}
+    - target: {fileID: 857511129, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
 --- !u!1 &904520298

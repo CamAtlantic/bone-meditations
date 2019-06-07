@@ -16,10 +16,10 @@ public class Sliders3D : MonoBehaviour
         
     }
 
-    void OnTouchMove(Vector3 delta)
+    void OnTouchMove(Vector2 delta)
     {
         //Vector3 vector = new Vector3(transform.position.x, worldPos.y, transform.position.y);
         //transform.position = vector;
-        transform.Translate(0, delta.y, 0);
+        transform.Translate(0, delta.y * 0.01f, 0);
     }
 }
