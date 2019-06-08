@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Dance : MonoBehaviour
 {
+    public static Dance danceScript;
+
     //public float rotateSpeed =5f;
     //[Space(10)]
     public Slider speedSlider;
    
-    public Slider torsoSlider;
-    public float torsoRotationMax = 50;
-    public float torsoRotationMin = -90;
+    public Slider3D torsoSlider;
     [Space(10)]
     [Header("Head")]
    
@@ -52,6 +52,7 @@ public class Dance : MonoBehaviour
 
     private void Awake()
     {
+        danceScript = this;
         bodyParts.Add(head);
         bodyParts.Add(torso);
         bodyParts.Add(upperLeg);
@@ -67,9 +68,9 @@ public class Dance : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        torsoSlider.maxValue = torsoRotationMax;
-        torsoSlider.minValue = torsoRotationMin;
-        torsoSlider.value = 0;
+        //torsoSlider.maxValue = torsoRotationMax;
+        //torsoSlider.minValue = torsoRotationMin;
+        //torsoSlider.value = 0;
 
         headSlider.maxValue = headRotationMax;
         headSlider.minValue = headRotationMin;
@@ -95,6 +96,7 @@ public class Dance : MonoBehaviour
 
     bool isSpinning = false;
 
+
     // Update is called once per frame
     void Update()
     {
@@ -110,7 +112,7 @@ public class Dance : MonoBehaviour
         }
 
         //float rotateSpeed = speedSlider.value;
-        float torsoValue = torsoSlider.value;
+        //float torsoValue = torsoSlider.value;
         float headValue = headSlider.value;
         float legYValue = legYSlider.value;
         float legZValue = legZSlider.value;
@@ -119,8 +121,9 @@ public class Dance : MonoBehaviour
         Vector3 contactLegPosition = contactLeg.transform.position;
         transform.RotateAround(contactLegPosition, new Vector3(0, 1f, 0), -currentRotateSpeed);
 
-        Vector3 newHipAngle = new Vector3(torsoValue, 0, 0);
-        torso.transform.localRotation = Quaternion.Euler(newHipAngle);
+        //temporarily disabled to try new sliders 
+       //Vector3 newHipAngle = new Vector3(torsoValue, 0, 0);
+        torso.transform.localRotation = Quaternion.Euler(torsoRotation);
 
         Vector3 newHeadAngle = new Vector3(headValue, 0, 0);
         head.transform.localRotation = Quaternion.Euler(newHeadAngle);
@@ -151,5 +154,12 @@ public class Dance : MonoBehaviour
         isSpinning = true;
         swipeDelta *= deltaScale ;//cause it's really high values
         currentRotateSpeed += swipeDelta;//add it to current so we don't lose values
+    }
+
+    Vector3 torsoRotation;
+    void SetTorsoRotation(Vector3 rotation)
+    {
+        torsoRotation = rotation;
+        Debug.Log(rotation);
     }
 }

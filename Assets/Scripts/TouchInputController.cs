@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TouchInputController : MonoBehaviour
 {
-    public Dance danceScript;
+    //public Dance danceScript;
     public GameObject touchIndicator;
     public Canvas canvas;
     public Text text;
@@ -66,17 +66,17 @@ public class TouchInputController : MonoBehaviour
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
-                        ShowText(Input.touches[i].deltaPosition.ToString());
+                        //ShowText(Input.touches[i].deltaPosition.ToString());
                     }
                     else
                     {
-                        danceScript.SendMessage("DirectRotate", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
+                        Dance.danceScript.SendMessage("DirectRotate", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
                 case TouchPhase.Stationary:
                     //if finger is not moving, hold char still
 
-                    danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
+                    Dance.danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
 
                     break;
                 case TouchPhase.Ended:
@@ -86,12 +86,12 @@ public class TouchInputController : MonoBehaviour
 
                         //end interaction, clean up
                         objectInteractingWith = null;
-                        ShowText("");
+                       // ShowText("");
                     }
                     else
                     {
                         //on release, send swipe spin
-                        danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
+                        Dance.danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
                 case TouchPhase.Canceled:

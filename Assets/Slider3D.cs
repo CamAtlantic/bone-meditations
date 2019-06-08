@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sliders3D : MonoBehaviour
+public class Slider3D : MonoBehaviour
 {
     float deltaScale = 0.003f;
     void OnTouchMove(Vector2 delta)
