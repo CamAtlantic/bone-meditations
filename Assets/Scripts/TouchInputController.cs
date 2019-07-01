@@ -14,7 +14,7 @@ public class TouchInputController : MonoBehaviour
     public LayerMask touchInputMask;
 
     //interaction variables
-    GameObject objectInteractingWith;//TODO: make it work with 
+    GameObject objectInteractingWith;//TODO: make it work with multiple touches
     Vector3 interactionStartScreenPos;
     Vector3 interactionStartWorldPos;
 
@@ -39,6 +39,7 @@ public class TouchInputController : MonoBehaviour
             Application.Quit();
         }
 
+        //Loop through touches
         for (int i = 0; i < Input.touchCount; i++)
         {
             //locations
@@ -51,7 +52,7 @@ public class TouchInputController : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
-
+            //increment & check if the hold time is longer than a tap
             if (tap) tapTimer += Time.deltaTime;
             if (tapTimer >= tapDuration) tap = false;
 
@@ -61,15 +62,16 @@ public class TouchInputController : MonoBehaviour
                     //record where this touch began using its index
                     touchStartScreenPositions[i] = latestScreenPos;
 
+                    //this is the first frame, so reset the tap timer
                     tap = true;
                     tapTimer = 0;
 
-
+                    /*
                     if (EventSystem.current.IsPointerOverGameObject(i))
                     {
                         Debug.Log("UI hit!");
-                    }
-                    else if (hit.collider)
+                    }*/
+                    if (hit.collider)
                     {
                         GameObject hitObject = hit.collider.gameObject;
                         
@@ -93,7 +95,6 @@ public class TouchInputController : MonoBehaviour
                     if (objectInteractingWith)
                     {
                         objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
-                        //ShowText(Input.touches[i].deltaPosition.ToString());
                     }
                     else
                     {
@@ -110,14 +111,18 @@ public class TouchInputController : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Ended:
+                    
+                    //when touch ends, if there is an object involved
                     if (objectInteractingWith)
                     {
-                        //this seems okay?
+                        //check if it's a bodypart
                         if (Dance.danceScript.bodyParts.Contains(objectInteractingWith))
                         {
+                            //so here it should be the case that this touch lasted less than tapTimer
                             if (tap)
                             {
-                                Debug.Log("bodytap");
+
+                                //let the object know it was tapped
                                 objectInteractingWith.SendMessage("OnTap");
                             }
                         }
@@ -126,7 +131,6 @@ public class TouchInputController : MonoBehaviour
                        
                         //end interaction, clean up
                         objectInteractingWith = null;
-                       // ShowText("");
                     }
                     else
                     {

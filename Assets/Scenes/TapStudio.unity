@@ -240,7 +240,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &44188638 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6000376338935827092, guid: 39d2b1e337c0cca41b73cc548afacbb1,
@@ -380,7 +380,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &430912266 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 62, guid: 46cd2dbd6e5cb91499b995f8ca5ede27,
@@ -769,7 +769,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &705309447 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 55, guid: 46cd2dbd6e5cb91499b995f8ca5ede27,
@@ -806,7 +806,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &713885241
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +909,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &724655437 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 61, guid: 46cd2dbd6e5cb91499b995f8ca5ede27,
@@ -946,7 +946,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 90, y: 0}
   RotationZMaxMin: {x: 90, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &796100907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2130,7 +2130,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1916569665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 54, guid: 46cd2dbd6e5cb91499b995f8ca5ede27,
@@ -2153,7 +2153,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 45, y: -45}
   RotationZMaxMin: {x: 45, y: -45}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!64 &1916569670
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2216,7 +2216,7 @@ MonoBehaviour:
   RotationYMaxMin: {x: 0, y: 0}
   RotationZMaxMin: {x: 0, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
-  selected: 0
+  currentLocalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &2136098083 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6000376339677170793, guid: 39d2b1e337c0cca41b73cc548afacbb1,
@@ -2422,7 +2422,7 @@ PrefabInstance:
     - target: {fileID: 6000376338610067043, guid: 39d2b1e337c0cca41b73cc548afacbb1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6000376338610067047, guid: 39d2b1e337c0cca41b73cc548afacbb1,
         type: 3}

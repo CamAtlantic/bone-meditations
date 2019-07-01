@@ -15,14 +15,13 @@ public class BodyPart : MonoBehaviour
     //public bool selected = false;
 
     public Quaternion currentLocalRotation;
-
-    private void Awake()
-    {
-        currentLocalRotation = transform.localRotation;
-    }
-
+    
     void OnTap()
     {
+        //getting the rotation here so it's available immediately
+        currentLocalRotation = transform.localRotation;
+
+
         //Go through all body parts and turn them normal material
         foreach (var part in Dance.danceScript.bodyParts)
         {

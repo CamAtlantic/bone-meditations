@@ -86,7 +86,7 @@ public class Dance : MonoBehaviour
     bool isSpinning = false;
 
     GameObject dialTarget;
-    Vector3 dialTargetRotation;
+    Quaternion dialTargetRotation;
 
     // Update is called once per frame
     void Update()
@@ -110,7 +110,7 @@ public class Dance : MonoBehaviour
         torso.transform.localRotation = Quaternion.Euler(torsoRotation);
         
         //if there is a dial target that is not the torso
-        if(dialTarget & dialTarget != torso) dialTarget.transform.localRotation = Quaternion.Euler(dialTargetRotation);
+        if(dialTarget & dialTarget != torso) dialTarget.transform.localRotation = dialTargetRotation;
     }
 
 
@@ -146,11 +146,11 @@ public class Dance : MonoBehaviour
         upperLegRotation = rotation;
     }
 
-    void SetDialTarget(GameObject target)
+    public void SetDialTarget(GameObject target)
     {
         dialTarget = target;
     }
-    void SetDialTargetRotation(Vector3 rotation)
+    public void SetDialTargetRotation(Quaternion rotation)
     {
         dialTargetRotation = rotation;
     }

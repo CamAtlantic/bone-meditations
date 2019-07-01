@@ -10,29 +10,37 @@ public class Dial3D : MonoBehaviour
     float deltaScale = 0.3f;
 
 
-    public float value = 0;
+    public float Value { get; private set; }
 
     void OnTouchMove(Vector2 delta)
     {
         switch (axis)
         {
-            //i know they don't make sense, just go with it
+            
+
+            //i know they don't make sense, just go with it.
+            //works by changing the value a particular amount. it is not tied to absolute rotation
             case Axis.X:
                 transform.Rotate(0, -delta.y * deltaScale, 0);
-                value += -delta.y * deltaScale;
+                Value += -delta.y * deltaScale;
                 break;
             case Axis.Y:
                 transform.Rotate(0, -delta.x * deltaScale, 0);
-                value += -delta.x * deltaScale;
+                Value += -delta.x * deltaScale;
 
                 break;
             case Axis.Z:
                 transform.Rotate(0, -delta.x * deltaScale, 0);
-                value += -delta.x * deltaScale;
+                Value += -delta.x * deltaScale;
 
                 break;
             default:
                 break;
         }
+    }
+
+    public void SetValue(float newValue)
+    {
+        Value = newValue;
     }
 }
