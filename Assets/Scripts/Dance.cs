@@ -16,19 +16,19 @@ public class Dance : MonoBehaviour
     [Header("Head")]
    
     public Slider headSlider;
-    public float headRotationMax = 50;
-    public float headRotationMin = -90;
+   // public float headRotationMax = 50;
+    //public float headRotationMin = -90;
 
     [Space(10)]
     [Header("Leg")]
  
     public LegControl legControl;
     public Slider legYSlider;
-    public float legYMax = 87;
-    public float legYMin = 0;
+   // public float legYMax = 87;
+   // public float legYMin = 0;
     public Slider legZSlider;
-    public float legZMax = 87;
-    public float legZMin = 0;
+   // public float legZMax = 87;
+   // public float legZMin = 0;
     [Space(10)]
     [Header("Body Parts")]
     
@@ -48,6 +48,9 @@ public class Dance : MonoBehaviour
 
     [HideInInspector]
     public List<GameObject> bodyParts = new List<GameObject>();
+    [Space(10)]
+    public Material normalMaterial;
+    public Material selectedMaterial;
 
 
     private void Awake()
@@ -57,7 +60,7 @@ public class Dance : MonoBehaviour
         bodyParts.Add(torso);
         bodyParts.Add(upperLeg);
         bodyParts.Add(lowerLeg);
-        bodyParts.Add(contactLeg);
+        //bodyParts.Add(contactLeg);
         bodyParts.Add(leftUpperArm);
         bodyParts.Add(leftLowerArm);
         bodyParts.Add(leftHand);
@@ -65,25 +68,11 @@ public class Dance : MonoBehaviour
         bodyParts.Add(rightLowerArm);
         bodyParts.Add(rightHand);
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        //torsoSlider.maxValue = torsoRotationMax;
-        //torsoSlider.minValue = torsoRotationMin;
-        //torsoSlider.value = 0;
-
-        headSlider.maxValue = headRotationMax;
-        headSlider.minValue = headRotationMin;
-        headSlider.value = 0;
-
-        legYSlider.maxValue = legYMax;
-        legYSlider.minValue = legYMin;
-        legYSlider.value = 0;
-
-        legZSlider.maxValue = legZMax;
-        legZSlider.minValue = legZMin;
-        legZSlider.value = 0;
-
+      
     }
 
     [Space(10)]
@@ -96,6 +85,8 @@ public class Dance : MonoBehaviour
 
     bool isSpinning = false;
 
+    GameObject dialTarget;
+    Vector3 dialTargetRotation;
 
     // Update is called once per frame
     void Update()
@@ -110,30 +101,16 @@ public class Dance : MonoBehaviour
                 isSpinning = false;
             }
         }
-
-        //float rotateSpeed = speedSlider.value;
-        //float torsoValue = torsoSlider.value;
-        float headValue = headSlider.value;
-        float legYValue = legYSlider.value;
-        float legZValue = legZSlider.value;
-
-
+        
+        //Get the position of the leg that's down and rotate about that position
         Vector3 contactLegPosition = contactLeg.transform.position;
         transform.RotateAround(contactLegPosition, new Vector3(0, 1f, 0), -currentRotateSpeed);
 
-        //temporarily disabled to try new sliders 
-       //Vector3 newHipAngle = new Vector3(torsoValue, 0, 0);
+        //coming in via the 3D sliders
         torso.transform.localRotation = Quaternion.Euler(torsoRotation);
-
-        Vector3 newHeadAngle = new Vector3(headValue, 0, 0);
-        head.transform.localRotation = Quaternion.Euler(newHeadAngle);
-
-        Vector3 newUpperLegAngle = new Vector3(legControl.upperLegAngle, legYValue, legZValue);
-        upperLeg.transform.localRotation = Quaternion.Euler(newUpperLegAngle);
-
-        Vector3 newLowerLegAngle = new Vector3(legControl.lowerLegAngle, 0, 0);
-        lowerLeg.transform.localRotation = Quaternion.Euler(newLowerLegAngle);
-
+        
+        //if there is a dial target that is not the torso
+        if(dialTarget & dialTarget != torso) dialTarget.transform.localRotation = Quaternion.Euler(dialTargetRotation);
     }
 
 
@@ -160,6 +137,21 @@ public class Dance : MonoBehaviour
     void SetTorsoRotation(Vector3 rotation)
     {
         torsoRotation = rotation;
-        Debug.Log(rotation);
+    }
+
+    Vector3 upperLegRotation;
+    void SetUpperLegRotation(Vector3 rotation)
+    {
+
+        upperLegRotation = rotation;
+    }
+
+    void SetDialTarget(GameObject target)
+    {
+        dialTarget = target;
+    }
+    void SetDialTargetRotation(Vector3 rotation)
+    {
+        dialTargetRotation = rotation;
     }
 }

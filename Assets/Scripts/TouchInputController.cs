@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TouchInputController : MonoBehaviour
 {
@@ -22,9 +23,22 @@ public class TouchInputController : MonoBehaviour
 
     Vector3[] touchStartScreenPositions = new Vector3[10];
 
-    // Update is called once per frame
+    float tapDuration = 0.2f;
+    float tapTimer = 0;
+    bool tap = true;
+
+    private void Start()
+    {
+        Input.multiTouchEnabled = true;
+    }
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         for (int i = 0; i < Input.touchCount; i++)
         {
             //locations
@@ -37,22 +51,35 @@ public class TouchInputController : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
+
+            if (tap) tapTimer += Time.deltaTime;
+            if (tapTimer >= tapDuration) tap = false;
+
             switch (phase)
             {
                 case TouchPhase.Began:
                     //record where this touch began using its index
                     touchStartScreenPositions[i] = latestScreenPos;
 
+                    tap = true;
+                    tapTimer = 0;
 
-                    if (hit.collider)
+
+                    if (EventSystem.current.IsPointerOverGameObject(i))
+                    {
+                        Debug.Log("UI hit!");
+                    }
+                    else if (hit.collider)
                     {
                         GameObject hitObject = hit.collider.gameObject;
+                        
                         if (!objectInteractingWith)
                         {
                             objectInteractingWith = hitObject;
                             interactionStartScreenPos = latestScreenPos;
                             interactionStartWorldPos = latestWorldPos;
                             hitObject.SendMessage("OnTouchDown", SendMessageOptions.DontRequireReceiver);
+                            
                         }
                     }
                     
@@ -60,8 +87,8 @@ public class TouchInputController : MonoBehaviour
                 case TouchPhase.Moved:
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
                     float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
-                    
-                    
+
+                    //tap = false;
 
                     if (objectInteractingWith)
                     {
@@ -74,16 +101,29 @@ public class TouchInputController : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Stationary:
+
+
                     //if finger is not moving, hold char still
-
-                    Dance.danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
-
+                    if (!objectInteractingWith)
+                    {
+                        Dance.danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
+                    }
                     break;
                 case TouchPhase.Ended:
                     if (objectInteractingWith)
                     {
-                        objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
+                        //this seems okay?
+                        if (Dance.danceScript.bodyParts.Contains(objectInteractingWith))
+                        {
+                            if (tap)
+                            {
+                                Debug.Log("bodytap");
+                                objectInteractingWith.SendMessage("OnTap");
+                            }
+                        }
 
+                        objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
+                       
                         //end interaction, clean up
                         objectInteractingWith = null;
                        // ShowText("");

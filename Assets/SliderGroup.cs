@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class SliderGroup : MonoBehaviour
 {
     public Text text;
-    public Slider3D x;
-    public Slider3D y;
-    public Slider3D z;
+    public Slider3D scrollBarX;
+    public Slider3D scrollBarY;
+    public Slider3D scrollBarZ;
 
     public GameObject affectedBodyPart;
 
@@ -30,9 +30,9 @@ public class SliderGroup : MonoBehaviour
         //startingValues = affectedBodyPart.transform.localEulerAngles;
         
         //normalize the values to 0-1 range then set them on the new scale
-        SetPosition(x, ConvertToScrollBar(Mathf.InverseLerp(BodyPartXMaxMin.x,BodyPartXMaxMin.y,startingValues.x)));
-        SetPosition(y, ConvertToScrollBar(Mathf.InverseLerp(BodyPartYMaxMin.x, BodyPartYMaxMin.y, startingValues.y)));
-        SetPosition(z, ConvertToScrollBar(Mathf.InverseLerp(BodyPartZMaxMin.x, BodyPartZMaxMin.y, startingValues.z)));
+        SetPosition(scrollBarX, ConvertToScrollBar(Mathf.InverseLerp(BodyPartXMaxMin.x,BodyPartXMaxMin.y,startingValues.x)));
+        SetPosition(scrollBarY, ConvertToScrollBar(Mathf.InverseLerp(BodyPartYMaxMin.x, BodyPartYMaxMin.y, startingValues.y)));
+        SetPosition(scrollBarZ, ConvertToScrollBar(Mathf.InverseLerp(BodyPartZMaxMin.x, BodyPartZMaxMin.y, startingValues.z)));
 
     }
 
@@ -40,27 +40,36 @@ public class SliderGroup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //clamping scroll bars here cause they're too dumb to do it on their own
+        scrollBarX.transform.localPosition = new Vector3(
+            scrollBarX.transform.localPosition.x,
+            Mathf.Clamp( scrollBarX.transform.localPosition.y,-scrollBarPositiveHeight,scrollBarPositiveHeight),
+            scrollBarX.transform.localPosition.z);
+
+        scrollBarY.transform.localPosition = new Vector3(
+            scrollBarY.transform.localPosition.x,
+            Mathf.Clamp(scrollBarY.transform.localPosition.y, -scrollBarPositiveHeight, scrollBarPositiveHeight),
+            scrollBarY.transform.localPosition.z);
+
+        scrollBarZ.transform.localPosition = new Vector3(
+            scrollBarZ.transform.localPosition.x,
+            Mathf.Clamp(scrollBarZ.transform.localPosition.y, -scrollBarPositiveHeight, scrollBarPositiveHeight),
+            scrollBarZ.transform.localPosition.z);
+
+        //convert each slider value into a float
         float xValue = ConvertToRotation(
-            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, x.transform.localPosition.y),
+            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, scrollBarX.transform.localPosition.y),
             BodyPartXMaxMin);
         float yValue = ConvertToRotation(
-            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, y.transform.localPosition.y),
+            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, scrollBarY.transform.localPosition.y),
             BodyPartYMaxMin);
         float zValue = ConvertToRotation(
-            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, z.transform.localPosition.y), 
+            Mathf.InverseLerp(-scrollBarPositiveHeight, scrollBarPositiveHeight, scrollBarZ.transform.localPosition.y), 
             BodyPartXMaxMin);
 
+        //turn em all into a vector and send it to where it needs to go
         latestVector = new Vector3(xValue, yValue, zValue);
         Dance.danceScript.SendMessage("SetTorsoRotation", latestVector, SendMessageOptions.DontRequireReceiver);
-
-        //ShowText("x: " + Normalize(startingValues.x, BodyPartXMaxMin));
-
-        //latestVector = new Vector3(Normalize(x.transform.localPosition.y), 0, 0);
-
-
-
-        //Vector3 newHipAngle = new Vector3(torsoValue, 0, 0);
-        //affectedBodyPart.transform.localRotation = Quaternion.Euler(newHipAngle);
     }
 
     float ConvertToScrollBar(float value)
