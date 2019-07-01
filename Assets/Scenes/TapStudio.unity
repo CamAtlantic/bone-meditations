@@ -1252,11 +1252,11 @@ PrefabInstance:
     - target: {fileID: 288, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
       propertyPath: normalMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: b8801357e47f8f24985cca568df19652, type: 2}
+      objectReference: {fileID: 2100000, guid: 634a7efca492a0c4fba2774e51f12e76, type: 2}
     - target: {fileID: 288, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
       propertyPath: selectedMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: f1da5ffa72ca4784f93e01614a8702cb, type: 2}
+      objectReference: {fileID: 2100000, guid: ebed2957950da0c4da3cc46fb3951cb0, type: 2}
     - target: {fileID: 857511129, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1390,6 +1390,10 @@ PrefabInstance:
       value: -30.512001
       objectReference: {fileID: 0}
     - target: {fileID: 148, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1c25f5cb2c2c85a44bf26d1ce5f3f9d6, type: 2}
+    - target: {fileID: 155, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 634a7efca492a0c4fba2774e51f12e76, type: 2}
@@ -2066,7 +2070,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d7ff2346481fb44babbe11f95286047, type: 2}
+  - {fileID: 2100000, guid: 1c25f5cb2c2c85a44bf26d1ce5f3f9d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2572,6 +2576,11 @@ PrefabInstance:
     - target: {fileID: 6000376339203458860, guid: 39d2b1e337c0cca41b73cc548afacbb1,
         type: 3}
       propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6000376340119262721, guid: 39d2b1e337c0cca41b73cc548afacbb1,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

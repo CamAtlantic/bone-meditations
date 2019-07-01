@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class Dance : MonoBehaviour
 {
     public static Dance danceScript;
-
-    //public float rotateSpeed =5f;
-    //[Space(10)]
+    
     public Slider speedSlider;
    
     public Slider3D torsoSlider;
@@ -16,19 +14,13 @@ public class Dance : MonoBehaviour
     [Header("Head")]
    
     public Slider headSlider;
-   // public float headRotationMax = 50;
-    //public float headRotationMin = -90;
 
     [Space(10)]
     [Header("Leg")]
  
     public LegControl legControl;
     public Slider legYSlider;
-   // public float legYMax = 87;
-   // public float legYMin = 0;
     public Slider legZSlider;
-   // public float legZMax = 87;
-   // public float legZMin = 0;
     [Space(10)]
     [Header("Body Parts")]
     

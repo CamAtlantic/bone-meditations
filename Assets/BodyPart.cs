@@ -10,28 +10,26 @@ public class BodyPart : MonoBehaviour
 
     public Color color = Color.white;
 
-    [HideInInspector]
-    
-    //public bool selected = false;
-
     public Quaternion currentLocalRotation;
-    
+
     void OnTap()
     {
         //getting the rotation here so it's available immediately
         currentLocalRotation = transform.localRotation;
 
-
-        //Go through all body parts and turn them normal material
-        foreach (var part in Dance.danceScript.bodyParts)
+        if (gameObject != Dance.danceScript.torso)
         {
-            part.GetComponent<Renderer>().material = Dance.danceScript.normalMaterial;
-        }
-        //set this body part to selected material
-        GetComponent<Renderer>().material = Dance.danceScript.selectedMaterial;
+            //Go through all body parts and turn them normal material
+            foreach (var part in Dance.danceScript.bodyParts)
+            {
+                if (part.gameObject != Dance.danceScript.torso)
+                {
+                    part.GetComponent<Renderer>().material = Dance.danceScript.normalMaterial;
+                }
+            }
+            //set this body part to selected material
+            GetComponent<Renderer>().material = Dance.danceScript.selectedMaterial;
 
-      //  if(selected == false)
-        {
             //Attach this to dial group
             FindObjectOfType<DialGroup>().SetBodyPart(this);
         }
