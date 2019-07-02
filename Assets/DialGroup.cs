@@ -52,10 +52,12 @@ public class DialGroup : MonoBehaviour
         BodyPartYMaxMin = affectedBodyPart.RotationYMaxMin;
         BodyPartZMaxMin = affectedBodyPart.RotationZMaxMin;
         
+        Dance.danceScript.SetDialTarget(bodyPart.gameObject);
+        Dance.danceScript.SetDialTargetRotation(latestQuaternion);
+
         //feedback part
         light.GetComponent<Renderer>().material = Dance.danceScript.selectedMaterial;
 
-        Dance.danceScript.SetDialTarget(bodyPart.gameObject);
     }
 
     void ShowText(string value)

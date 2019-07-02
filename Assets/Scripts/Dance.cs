@@ -103,6 +103,7 @@ public class Dance : MonoBehaviour
         
         //if there is a dial target that is not the torso
         if(dialTarget & dialTarget != torso) dialTarget.transform.localRotation = dialTargetRotation;
+
     }
 
 
