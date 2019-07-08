@@ -40,14 +40,18 @@ public class DialGroup : MonoBehaviour
 
     public void SetBodyPart(BodyPart bodyPart)
     {
+        //cache the new part
         affectedBodyPart = bodyPart;
 
+        //get its current rotation
         latestQuaternion = affectedBodyPart.currentLocalRotation;
 
+        //set dials to that value
         dialX.SetValue(latestQuaternion.eulerAngles.x);
         dialY.SetValue(latestQuaternion.eulerAngles.y);
         dialZ.SetValue(latestQuaternion.eulerAngles.z);
 
+        //get the max/min
         BodyPartXMaxMin = affectedBodyPart.RotationXMaxMin;
         BodyPartYMaxMin = affectedBodyPart.RotationYMaxMin;
         BodyPartZMaxMin = affectedBodyPart.RotationZMaxMin;
@@ -55,7 +59,7 @@ public class DialGroup : MonoBehaviour
         Dance.danceScript.SetDialTarget(bodyPart.gameObject);
         Dance.danceScript.SetDialTargetRotation(latestQuaternion);
 
-        //feedback part
+        //feedback
         light.GetComponent<Renderer>().material = Dance.danceScript.selectedMaterial;
 
     }

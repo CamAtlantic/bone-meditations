@@ -55,6 +55,9 @@ public class TouchInputController : MonoBehaviour
             //increment & check if the hold time is longer than a tap
             if (tap) tapTimer += Time.deltaTime;
             if (tapTimer >= tapDuration) tap = false;
+            
+
+
 
             switch (phase)
             {

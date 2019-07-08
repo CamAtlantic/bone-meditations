@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class BodyPart : MonoBehaviour
 {
+
+    public int tier = 0;
+[Space(10)]
     public Vector2 RotationXMaxMin;
     public Vector2 RotationYMaxMin;
     public Vector2 RotationZMaxMin;
 
     public Color color = Color.white;
 
+    [HideInInspector]
     public Quaternion currentLocalRotation;
 
     void OnTap()
