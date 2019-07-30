@@ -17,10 +17,7 @@ public class TouchInputController : MonoBehaviour
     GameObject objectInteractingWith;//TODO: make it work with multiple touches
     Vector3 interactionStartScreenPos;
     Vector3 interactionStartWorldPos;
-
-    //delta at which a swipe is triggered
-    float swipeDeltaThreshold = 2f;
-
+    
     Vector3[] touchStartScreenPositions = new Vector3[10];
 
     float tapDuration = 0.2f;
@@ -34,11 +31,7 @@ public class TouchInputController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
+        
         //Loop through touches
         for (int i = 0; i < Input.touchCount; i++)
         {
@@ -47,7 +40,7 @@ public class TouchInputController : MonoBehaviour
             Vector3 latestScreenPos = Input.touches[i].position;
             TouchPhase phase = Input.touches[i].phase;
 
-            //raycast
+            //raycast for 3D objects
             Ray ray = Camera.main.ScreenPointToRay(latestScreenPos);
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
@@ -69,11 +62,7 @@ public class TouchInputController : MonoBehaviour
                     tap = true;
                     tapTimer = 0;
 
-                    /*
-                    if (EventSystem.current.IsPointerOverGameObject(i))
-                    {
-                        Debug.Log("UI hit!");
-                    }*/
+                    
                     if (hit.collider)
                     {
                         GameObject hitObject = hit.collider.gameObject;
@@ -92,8 +81,6 @@ public class TouchInputController : MonoBehaviour
                 case TouchPhase.Moved:
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
                     float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
-
-                    //tap = false;
 
                     if (objectInteractingWith)
                     {
@@ -115,13 +102,12 @@ public class TouchInputController : MonoBehaviour
                     break;
                 case TouchPhase.Ended:
                     
-                    //when touch ends, if there is an object involved
+                    //IF TAPPING / DRAGGING ON OBJECT
                     if (objectInteractingWith)
                     {
                         //check if it's a bodypart
-                        if (Dance.danceScript.bodyParts.Contains(objectInteractingWith))
+                        if (Dance.danceScript.bodyParts.Contains(objectInteractingWith.GetComponent<BodyPart>()))
                         {
-                            //so here it should be the case that this touch lasted less than tapTimer
                             if (tap)
                             {
 
@@ -130,13 +116,13 @@ public class TouchInputController : MonoBehaviour
                             }
                         }
 
-                        objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
-                       
                         //end interaction, clean up
+                        objectInteractingWith.SendMessage("OnTouchExit", SendMessageOptions.DontRequireReceiver);
                         objectInteractingWith = null;
                     }
-                    else
+                    else //not tapping / dragging
                     {
+                        //TODO: this feels a little gross, hard to stop the model. needs delta check probably.
                         //on release, send swipe spin
                         Dance.danceScript.SendMessage("SwipeSpin", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
@@ -155,8 +141,14 @@ public class TouchInputController : MonoBehaviour
             }
         }
 
+        //quit the app
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
     }
-    
+
     void ShowText(string value)
     {
         text.text = value;

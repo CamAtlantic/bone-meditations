@@ -5,23 +5,24 @@ using UnityEngine.UI;
 
 public class LimbHandles : MonoBehaviour
 {
-    GameObject[] bodyParts;
-    GameObject[] handles;
+    BodyPart[] bodyParts;
+    UIHandle[] handles;
 
     public GameObject handlePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        bodyParts = FindObjectOfType<Dance>().bodyParts.ToArray();
-        handles = new GameObject[bodyParts.Length];
+        bodyParts = Dance.danceScript.bodyParts.ToArray();
+        handles = new UIHandle[bodyParts.Length];
 
         for (int i = 0; i < bodyParts.Length; i++)
         {
-            handles[i] = Instantiate(handlePrefab, transform);
-            if (bodyParts[i].GetComponent<BodyPart>().tier > 1)
+            handles[i] = Instantiate(handlePrefab, transform).GetComponent<UIHandle>();
+            handles[i].linkedBodyPart = bodyParts[i];
+            if (bodyParts[i].tier > 1)
             {
-                handles[i].SetActive(false);
+                handles[i].gameObject.SetActive(false);
             }
         }
     }
@@ -61,23 +62,16 @@ public class LimbHandles : MonoBehaviour
                     }
                 }
             }
+            Vector3 anchoredPos = handles[i].GetComponent<RectTransform>().anchoredPosition;
+            //Vector3 handleLinePos = Camera.main.ScreenToWorldPoint(new Vector3(anchoredPos.x, anchoredPos.y, Camera.main.nearClipPlane));
+                
+            //handles[i].lineRenderer.SetPosition(0, handleLinePos);
+            //handles[i].lineRenderer.SetPosition(1, bodyParts[i].transform.position);
 
-            //hacky as hell
-            if (fingerDown)
-            {
-                handles[i].GetComponent<Image>().color = Color.red;
-            }
-            else { handles[i].GetComponent<Image>().color = Color.white; }
-            fingerDown = false;
         }
 
-    }
-    /*
-    public bool fingerDown = false;
 
-    public void FingerDown()
-    {
-        fingerDown = true;
+
     }
-    */
+    
 }

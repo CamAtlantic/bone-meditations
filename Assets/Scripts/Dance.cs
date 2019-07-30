@@ -39,7 +39,7 @@ public class Dance : MonoBehaviour
 
 
     [HideInInspector]
-    public List<GameObject> bodyParts = new List<GameObject>();
+    public List<BodyPart> bodyParts = new List<BodyPart>();
     [Space(10)]
     public Material normalMaterial;
     public Material selectedMaterial;
@@ -48,25 +48,19 @@ public class Dance : MonoBehaviour
     private void Awake()
     {
         danceScript = this;
-        bodyParts.Add(head);
-        bodyParts.Add(torso);
-        bodyParts.Add(upperLeg);
-        bodyParts.Add(lowerLeg);
-        //bodyParts.Add(contactLeg);
-        bodyParts.Add(leftUpperArm);
-        bodyParts.Add(leftLowerArm);
-        bodyParts.Add(leftHand);
-        bodyParts.Add(rightUpperArm);
-        bodyParts.Add(rightLowerArm);
-        bodyParts.Add(rightHand);
+        bodyParts.Add(head.GetComponent<BodyPart>());
+        bodyParts.Add(torso.GetComponent<BodyPart>());
+        bodyParts.Add(upperLeg.GetComponent<BodyPart>());
+        bodyParts.Add(lowerLeg.GetComponent<BodyPart>());
+        bodyParts.Add(leftUpperArm.GetComponent<BodyPart>());
+        bodyParts.Add(leftLowerArm.GetComponent<BodyPart>());
+        bodyParts.Add(leftHand.GetComponent<BodyPart>());
+        bodyParts.Add(rightUpperArm.GetComponent<BodyPart>());
+        bodyParts.Add(rightLowerArm.GetComponent<BodyPart>());
+        bodyParts.Add(rightHand.GetComponent<BodyPart>());
+        //Contact Leg is not in this list because it's not interactable at all
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-      
-    }
-
+    
     [Space(10)]
     [Header("Physics")]
     //value passed in via SwipeRotate

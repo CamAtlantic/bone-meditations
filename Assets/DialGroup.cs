@@ -20,15 +20,8 @@ public class DialGroup : MonoBehaviour
     Vector2 BodyPartYMaxMin;
     Vector2 BodyPartZMaxMin;
 
-    public GameObject light;
-
-
-    private void Start()
-    {
-        
-    }
-
-
+    new public GameObject light;
+    
     // Update is called once per frame
     void Update()
     {
