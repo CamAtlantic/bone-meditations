@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -206,10 +206,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere Stack (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7954409619999271061, guid: 4d6cc5c49d3546249abb0b466f756731,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9160002
+      value: 0.9160003
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -219,7 +224,7 @@ PrefabInstance:
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0000007301793
+      value: 0.00000051158025
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -229,7 +234,7 @@ PrefabInstance:
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7849704
+      value: 0.9993036
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -239,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.6195333
+      value: -0.03731634
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -254,7 +259,7 @@ PrefabInstance:
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -463.436
+      value: -535.723
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -274,6 +279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sphere Stack (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954409619999271061, guid: 4d6cc5c49d3546249abb0b466f756731,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 4d6cc5c49d3546249abb0b466f756731,
         type: 3}
@@ -552,3 +562,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d6cc5c49d3546249abb0b466f756731, type: 3}
+--- !u!1 &7954409619999271061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7954409619999271061, guid: 4d6cc5c49d3546249abb0b466f756731,
+    type: 3}
+  m_PrefabInstance: {fileID: 6378860655070572679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7954409619999271062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954409619999271061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8882c32b878e64481ea531673a9526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
