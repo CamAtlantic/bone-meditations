@@ -14,13 +14,7 @@ public class ControlSphereStack : MonoBehaviour
     [Space(10)]
 
     public GameObject target;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -28,21 +22,11 @@ public class ControlSphereStack : MonoBehaviour
         YToObjectLine.SetPositions(new Vector3[] { yAxisControl.transform.position, target.transform.position });
         ZToObjectLine.SetPositions(new Vector3[] { zAxisControl.transform.position, target.transform.position });
 
+        xAxisControl.transform.localRotation = target.transform.rotation;
+        yAxisControl.transform.localRotation = target.transform.rotation;
+        zAxisControl.transform.localRotation = target.transform.rotation;
 
     }
 
-    public void MoveControl(Vector3 newPosition, GameObject control)
-    {
-        if (control == xAxisControl)
-        {
-        }
-        if (control == yAxisControl)
-        {
 
-        }
-        if (control == zAxisControl)
-        {
-
-        }
-    }
 }

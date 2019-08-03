@@ -10,13 +10,13 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.ColorShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Value\": {\n        \"r\": 0.9019999504089356,\n        \"g\": 0.8029994964599609,\n        \"b\": 0.7504639625549316,\n        \"a\": 0.0\n    },\n    \"m_Name\": \"Albedo\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"0faa2906-977d-4505-a31a-2dbee7e3b470\"\n    },\n    \"m_OverrideReferenceName\": \"\",\n    \"m_ColorMode\": 0,\n    \"m_Hidden\": false\n}"
+            "JSONnodeData": "{\n    \"m_Value\": {\n        \"r\": 0.9019999504089356,\n        \"g\": 0.8029994964599609,\n        \"b\": 0.7504639625549316,\n        \"a\": 0.0\n    },\n    \"m_Name\": \"Albedo\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"0faa2906-977d-4505-a31a-2dbee7e3b470\"\n    },\n    \"m_OverrideReferenceName\": \"_Albedo\",\n    \"m_ColorMode\": 0,\n    \"m_Hidden\": false\n}"
         },
         {
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.ColorShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Value\": {\n        \"r\": 2.94901967048645,\n        \"g\": 1.9751008749008179,\n        \"b\": 0.5712759494781494,\n        \"a\": 0.0\n    },\n    \"m_Name\": \"Fresnel Color\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"e5f738fd-f545-4af8-8f48-26a40b4e7ab5\"\n    },\n    \"m_OverrideReferenceName\": \"\",\n    \"m_ColorMode\": 1,\n    \"m_Hidden\": false\n}"
+            "JSONnodeData": "{\n    \"m_Value\": {\n        \"r\": 2.94901967048645,\n        \"g\": 1.9751008749008179,\n        \"b\": 0.5712759494781494,\n        \"a\": 0.0\n    },\n    \"m_Name\": \"Fresnel Color\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"e5f738fd-f545-4af8-8f48-26a40b4e7ab5\"\n    },\n    \"m_OverrideReferenceName\": \"_FresnelColor\",\n    \"m_ColorMode\": 1,\n    \"m_Hidden\": false\n}"
         }
     ],
     "m_GUID": {

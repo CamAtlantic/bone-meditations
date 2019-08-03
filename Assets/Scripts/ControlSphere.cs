@@ -4,18 +4,97 @@ using UnityEngine;
 
 public class ControlSphere : MonoBehaviour
 {
-
+    [ColorUsage(true,true)]
     public Color defaultColor;
+    [ColorUsage(true, true)]
     public Color selectedColor;
     Material mat;
 
     float rotationSpeed = 0.1f;
 
+    bool held = false;
+
+    Vector3 normalScale;
+    public float selectedScale = 1.2f;
+
+    float selectionAnimSeconds;
+    public float selectionAnimSecondsMax = 0.2f;
+
+    public LineRenderer axis;
+
     private void Start()
     {
         mat = GetComponent<Renderer>().material;
+        normalScale = transform.localScale;
     }
 
+    private void Update()
+    {
+        Vector3 corner0 = axis.transform.TransformPoint( axis.GetPosition(0) );
+        Vector3 corner1 = axis.transform.TransformPoint(axis.GetPosition(1));
+
+        corner0 = Camera.main.WorldToScreenPoint(corner0);
+        corner1 = Camera.main.WorldToScreenPoint(corner1);
+        /*
+        if(corner0.y < 0 || corner1.y < 0)
+        {
+            transform.localPosition = transform.localPosition + (transform.up * Time.deltaTime);
+        }
+        if (corner0.y > Screen.height || corner1.y > Screen.height)
+        {
+            transform.localPosition = transform.localPosition - (transform.up * Time.deltaTime);
+        }
+        if (corner0.x < 0 || corner1.x < 0)
+        {
+            transform.localPosition = transform.localPosition + (transform.right * Time.deltaTime);
+        }
+        if (corner0.x > Screen.width || corner1.x > Screen.width)
+        {
+            transform.localPosition = transform.localPosition - (transform.right * Time.deltaTime);
+        }
+        */
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(name + " " + corner0 + " " + corner1);
+
+        }
+
+        if (held)
+        {
+            selectionAnimSeconds += Time.deltaTime;
+            if (selectionAnimSeconds > selectionAnimSecondsMax)
+            {
+                selectionAnimSeconds = selectionAnimSecondsMax;
+            }
+
+        }
+        else
+        {
+            selectionAnimSeconds -= Time.deltaTime;
+            if (selectionAnimSeconds < 0)
+            {
+                selectionAnimSeconds = 0;
+            }
+        }
+
+        float selectionProgress = selectionAnimSeconds / selectionAnimSecondsMax;
+
+        float math = Mathf.Lerp(1, selectedScale, selectionProgress);
+
+        transform.localScale = normalScale * math;
+
+    }
+
+    public void StartInteraction()//Called by TouchInputController
+    {
+        held = true;
+    }
+    public void EndInteraction()
+    {
+        held = false;
+    }
+
+    //=====================
     void OnTouchDown()
     {
         mat.color = selectedColor;

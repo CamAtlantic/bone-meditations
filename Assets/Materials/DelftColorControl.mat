@@ -89,8 +89,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_BA717D8A: {r: 0, g: 0.32433078, b: 0.8207547, a: 1}
-    - Color_FFAE0895: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
+    - Color_BA717D8A: {r: 0, g: 0.21110582, b: 1, a: 1}
+    - Color_FFAE0895: {r: 0.6666667, g: 0.821685, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
