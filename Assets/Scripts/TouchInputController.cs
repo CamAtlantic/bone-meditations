@@ -6,15 +6,15 @@ using UnityEngine.EventSystems;
 
 public class TouchInputController : MonoBehaviour
 {
-    //public Dance danceScript;
-    public GameObject touchIndicator;
-    public Canvas canvas;
-    public Text text;
+    //public GameObject touchIndicator;
+    //public Canvas canvas;
+    public Text debugTextBox;
     [Space(10)]
-    public LayerMask touchInputMask;
+    public LayerMask touchInputMask;//think this is for raycasting?
 
     //interaction variables
-    GameObject objectInteractingWith;//TODO: make it work with multiple touches
+    //TODO: make it work with multiple touches
+    GameObject objectInteractingWith;
     Vector3 interactionStartScreenPos;
     Vector3 interactionStartWorldPos;
     
@@ -31,7 +31,6 @@ public class TouchInputController : MonoBehaviour
 
     void Update()
     {
-        
         //Loop through touches
         for (int i = 0; i < Input.touchCount; i++)
         {
@@ -50,8 +49,6 @@ public class TouchInputController : MonoBehaviour
             if (tapTimer >= tapDuration) tap = false;
             
 
-
-
             switch (phase)
             {
                 case TouchPhase.Began:
@@ -62,7 +59,7 @@ public class TouchInputController : MonoBehaviour
                     tap = true;
                     tapTimer = 0;
 
-                    
+                    //if the raycast hit something
                     if (hit.collider)
                     {
                         GameObject hitObject = hit.collider.gameObject;
@@ -72,27 +69,34 @@ public class TouchInputController : MonoBehaviour
                             objectInteractingWith = hitObject;
                             interactionStartScreenPos = latestScreenPos;
                             interactionStartWorldPos = latestWorldPos;
-                            hitObject.SendMessage("OnTouchDown", SendMessageOptions.DontRequireReceiver);
-                            
+                            //hitObject.SendMessage("OnTouchDown", SendMessageOptions.DontRequireReceiver);
+
+                            //Here is where I can start an interaction with a 3D object
                         }
                     }
                     
                     break;
                 case TouchPhase.Moved:
+                    //this frame delta
                     float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
+                    //total delta this interaction
                     float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
 
+                    //TODO: make this work with multiple touches
                     if (objectInteractingWith)
                     {
-                        objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
+                        //objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
+                        
+                        //Here I can move a 3D object
                     }
                     else
                     {
+                        //Backup if not interacting, go to rotating the dancer
                         Dance.danceScript.SendMessage("DirectRotate", Input.touches[i].deltaPosition.x, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
-                case TouchPhase.Stationary:
 
+                case TouchPhase.Stationary:
 
                     //if finger is not moving, hold char still
                     if (!objectInteractingWith)
@@ -100,6 +104,7 @@ public class TouchInputController : MonoBehaviour
                         Dance.danceScript.SendMessage("DirectRotate", 0, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
+
                 case TouchPhase.Ended:
                     
                     //IF TAPPING / DRAGGING ON OBJECT
@@ -151,6 +156,6 @@ public class TouchInputController : MonoBehaviour
 
     void ShowText(string value)
     {
-        text.text = value;
+        debugTextBox.text = value;
     }
 }
