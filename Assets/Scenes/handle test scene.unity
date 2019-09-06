@@ -447,6 +447,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere Stack Axes
       objectReference: {fileID: 0}
+    - target: {fileID: 7954409619999271061, guid: 9f36f4310f3c8fa4e80f1a4727b41487,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7630689629722802133, guid: 9f36f4310f3c8fa4e80f1a4727b41487,
         type: 3}
       propertyPath: m_LocalPosition.x
