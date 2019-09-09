@@ -63,9 +63,9 @@ public class Dance : MonoBehaviour
     
     [Space(10)]
     [Header("Physics")]
-    //value passed in via SwipeRotate
-    public float currentRotateSpeed = 0;
-    public float friction = 0.7f;
+    private float currentRotateSpeed = 0;
+    //Set in Inspector!
+    public float friction = 0.99f;
     public float deadzone = 0.02f;
     public float maxSpeed = 15f;
 
@@ -80,6 +80,7 @@ public class Dance : MonoBehaviour
         if (isSpinning)
         {
             currentRotateSpeed *= friction;
+
             currentRotateSpeed = Mathf.Clamp(currentRotateSpeed, -maxSpeed, maxSpeed);
             if (Mathf.Abs(currentRotateSpeed) <= deadzone)
             {
@@ -103,7 +104,7 @@ public class Dance : MonoBehaviour
 
     float deltaScale = 0.1f;
     
-    void DirectRotate(float delta)
+    public void DirectRotate(float delta)///just directly applies delta for input feels and can be used to stop spin
     {
         isSpinning = false;
         float speed = Mathf.Clamp(delta, -maxSpeed, maxSpeed);
@@ -113,10 +114,12 @@ public class Dance : MonoBehaviour
     }
 
     //called via SendMessage TouchInputController
-    void SwipeSpin(float swipeDelta)
+    public void SwipeSpin(float swipeDelta)///takes delta and sets up spin
     {
         isSpinning = true;
-        swipeDelta *= deltaScale ;//cause it's really high values
+        //we don't need the below line on PC, but may be necessary on mobile.
+        //However maybe the mobile number should be with the mobile input code.
+        //swipeDelta *= deltaScale ;//cause it's really high values
         currentRotateSpeed += swipeDelta;//add it to current so we don't lose values
     }
 

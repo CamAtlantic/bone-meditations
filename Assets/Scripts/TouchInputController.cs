@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Cinemachine;
 
 public class TouchInputController : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class TouchInputController : MonoBehaviour
     Vector3 interactionStartWorldPos;
     //Vector3[] touchStartScreenPositions = new Vector3[10];
     //-----------------------------------
+
+    [Header("virtual cams")]
+    public CinemachineVirtualCamera staticVCam;
+    public CinemachineVirtualCamera LookCamA;
+    public CinemachineVirtualCamera LookCamB;
 
     public struct Interaction
     {
@@ -50,9 +56,17 @@ public class TouchInputController : MonoBehaviour
     {
         Vector3 thisFrameScreenPos = Input.mousePosition;
 
+        //increment & check if the hold time is longer than a tap
+        if (tap) tapTimer += Time.deltaTime;
+        if (tapTimer >= tapDuration) tap = false;
+
         //First frame mouse button down:
         if (Input.GetMouseButtonDown(0))
         {
+            //this is the first frame, so reset the tap timer
+            tap = true;
+            tapTimer = 0;
+
             //raycast for 3D objects
             Ray ray = Camera.main.ScreenPointToRay(thisFrameScreenPos);
             RaycastHit hit;
@@ -71,11 +85,28 @@ public class TouchInputController : MonoBehaviour
 
                     FindObjectOfType<ControlSphereStack>().SetControlTarget( hit.collider.gameObject);
 
+                    //hacking this to make it toggle between two virtual cameras
+                    if (LookCamA.Priority <10)
+                    {
+                        //enable cam
+                        LookCamA.LookAt = hit.transform;
+                        LookCamA.Priority = 10;
+                        LookCamB.Priority = 1;
+                    }
+                    else
+                    {
+                        //enable cam1
+                        LookCamB.LookAt = hit.transform;
+                        LookCamB.Priority = 10;
+                        LookCamA.Priority = 1;
+                    }
+                    staticVCam.Priority = 1;
+
                 }
             }
         }
 
-        //Mouse button held down:
+        //Mouse button held down (and dragged):
         if (Input.GetMouseButton(0))
         {
             //check the interaction slot to see if there is something
@@ -85,13 +116,9 @@ public class TouchInputController : MonoBehaviour
             }
             else
             {
-                //look for a target
-
-
-                //rotate the dancer
+                //directly rotate the dancer
                 float mouseXDelta = Input.GetAxis("Mouse X");
-                Dance.danceScript.SendMessage("DirectRotate", mouseXDelta * mouseSpinSpeed, SendMessageOptions.DontRequireReceiver);
-
+                Dance.danceScript.DirectRotate(mouseXDelta * mouseSpinSpeed);
             }
         }
 
@@ -104,7 +131,25 @@ public class TouchInputController : MonoBehaviour
                 interactions[0].target.SendMessage("EndInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
                 interactions[0] = new Interaction();
             }
+            else
+            {
+                
+                if (tap)
+                {
+                    //hack to reset cam on bg click
+                    staticVCam.Priority = 10;
+                    LookCamA.Priority = 1;
+                    LookCamB.Priority = 1;
+                }
+                else
+                {
+                    //set the dancer spinning
+                    float mouseXDelta = Input.GetAxis("Mouse X");
+                    Dance.danceScript.SwipeSpin(mouseXDelta * mouseSpinSpeed);
 
+                }
+
+            }
 
         }
 

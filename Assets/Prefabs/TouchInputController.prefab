@@ -43,11 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83cb4ac2815a01a46a4c0f6ecc2eb72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  danceScript: {fileID: 1658404385, guid: 46cd2dbd6e5cb91499b995f8ca5ede27, type: 3}
-  touchIndicator: {fileID: 3175652106495523661, guid: b229edb051b3eff44a2b9909359d6d27,
-    type: 3}
-  canvas: {fileID: 6000376338610067046, guid: 39d2b1e337c0cca41b73cc548afacbb1, type: 3}
-  text: {fileID: 0}
+  debugTextBox: {fileID: 0}
   touchInputMask:
     serializedVersion: 2
     m_Bits: 512
+  mouseSpinSpeed: 20
