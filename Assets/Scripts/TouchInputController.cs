@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 
 public class TouchInputController : MonoBehaviour
 {
-    //public GameObject touchIndicator;
-    //public Canvas canvas;
+
     public Text debugTextBox;
     [Space(10)]
     public LayerMask touchInputMask;//think this is for raycasting?
@@ -45,6 +44,8 @@ public class TouchInputController : MonoBehaviour
         Input.multiTouchEnabled = true;
     }
 
+    public float mouseSpinSpeed = 5f;
+
     void Update()
     {
         Vector3 thisFrameScreenPos = Input.mousePosition;
@@ -63,13 +64,13 @@ public class TouchInputController : MonoBehaviour
                 GameObject hitObject = hit.collider.gameObject;
 
                 interactions[0] = new Interaction(hitObject, thisFrameScreenPos);
-                interactions[0].target.SendMessage("StartInteraction");//Used by ControlSphere
+                interactions[0].target.SendMessage("StartInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
 
-                if(hitObject.GetComponent<ControlSphere>() == false)
+                if (hitObject.GetComponent<ControlSphere>() == false)
                 {
-                   
-                        FindObjectOfType<ControlSphereStack>().target = hit.collider.gameObject;
-                    
+
+                    FindObjectOfType<ControlSphereStack>().target = hit.collider.gameObject;
+
                 }
             }
         }
@@ -85,6 +86,12 @@ public class TouchInputController : MonoBehaviour
             else
             {
                 //look for a target
+
+
+                //rotate the dancer
+                float mouseXDelta = Input.GetAxis("Mouse X");
+                Dance.danceScript.SendMessage("DirectRotate", mouseXDelta * mouseSpinSpeed, SendMessageOptions.DontRequireReceiver);
+
             }
         }
 
@@ -94,24 +101,20 @@ public class TouchInputController : MonoBehaviour
             //check the interaction slot to see if there is something
             if (interactions[0].target)
             {
-                interactions[0].target.SendMessage("EndInteraction");//Used by ControlSphere
+                interactions[0].target.SendMessage("EndInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
                 interactions[0] = new Interaction();
             }
-            
-            
+
+
         }
 
         //Mobile Code below
         //========================
 
-        
-        
-
         //Loop through touches
         for (int i = 0; i < Input.touchCount; i++)
         {
             //locations
-            Vector3 latestWorldPos = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
             Vector3 latestScreenPos = Input.touches[i].position;
             TouchPhase phase = Input.touches[i].phase;
 
@@ -123,13 +126,11 @@ public class TouchInputController : MonoBehaviour
             //increment & check if the hold time is longer than a tap
             if (tap) tapTimer += Time.deltaTime;
             if (tapTimer >= tapDuration) tap = false;
-            
+
 
             switch (phase)
             {
                 case TouchPhase.Began:
-                    //record where this touch began using its index
-                    //touchStartScreenPositions[i] = latestScreenPos;
 
                     //this is the first frame, so reset the tap timer
                     tap = true;
@@ -140,22 +141,18 @@ public class TouchInputController : MonoBehaviour
                     {
                         GameObject hitObject = hit.collider.gameObject;
 
+                        //log this as an interaction and notify the object
                         interactions[i] = new Interaction(hitObject, latestScreenPos);
                         interactions[i].target.SendMessage("StartInteraction");//Used by ControlSphere
                     }
-                    
+
                     break;
                 case TouchPhase.Moved:
-                    //this frame delta
-                    float absXDelta = Mathf.Abs(Input.touches[i].deltaPosition.x);
-                    //total delta this interaction
-                    //float totalXDelta = touchStartScreenPositions[i].x - latestScreenPos.x;
 
-                    //TODO: make this work with multiple touches
+                    //TODO: make this work with multiple touches. need to check index of touch with index of interaction.
                     if (objectInteractingWith)
                     {
-                        //objectInteractingWith.SendMessage("OnTouchMove", Input.touches[i].deltaPosition, SendMessageOptions.DontRequireReceiver);
-                        
+
                         //Here I can move a 3D object
                     }
                     else
