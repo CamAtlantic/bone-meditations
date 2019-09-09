@@ -11,21 +11,32 @@ public class ControlSphereStack : MonoBehaviour
     public LineRenderer XToObjectLine;
     public LineRenderer YToObjectLine;
     public LineRenderer ZToObjectLine;
-    [Space(10)]
 
-    public GameObject target;
-    
-    // Update is called once per frame
+    public GameObject Target { get; private set; }
+
+    public bool debugLinesOn = false;
+
     void Update()
     {
-        XToObjectLine.SetPositions(new Vector3[] { xAxisControl.transform.position, target.transform.position });
-        YToObjectLine.SetPositions(new Vector3[] { yAxisControl.transform.position, target.transform.position });
-        ZToObjectLine.SetPositions(new Vector3[] { zAxisControl.transform.position, target.transform.position });
+        XToObjectLine.enabled = debugLinesOn;
+        YToObjectLine.enabled = debugLinesOn;
+        ZToObjectLine.enabled = debugLinesOn;
 
-        xAxisControl.transform.localRotation = target.transform.rotation;
-        yAxisControl.transform.localRotation = target.transform.rotation;
-        zAxisControl.transform.localRotation = target.transform.rotation;
+        if (Target)
+        {
+            XToObjectLine.SetPositions(new Vector3[] { xAxisControl.transform.position, Target.transform.position });
+            YToObjectLine.SetPositions(new Vector3[] { yAxisControl.transform.position, Target.transform.position });
+            ZToObjectLine.SetPositions(new Vector3[] { zAxisControl.transform.position, Target.transform.position });
 
+            xAxisControl.transform.localRotation = Target.transform.rotation;
+            yAxisControl.transform.localRotation = Target.transform.rotation;
+            zAxisControl.transform.localRotation = Target.transform.rotation;
+        }
+    }
+
+    public void SetControlTarget(GameObject newTarget)
+    {
+        Target = newTarget;
     }
 
 

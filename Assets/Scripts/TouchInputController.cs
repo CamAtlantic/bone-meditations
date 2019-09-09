@@ -69,7 +69,7 @@ public class TouchInputController : MonoBehaviour
                 if (hitObject.GetComponent<ControlSphere>() == false)
                 {
 
-                    FindObjectOfType<ControlSphereStack>().target = hit.collider.gameObject;
+                    FindObjectOfType<ControlSphereStack>().SetControlTarget( hit.collider.gameObject);
 
                 }
             }
@@ -177,7 +177,7 @@ public class TouchInputController : MonoBehaviour
                         //if you hit anything that's not a control sphere
                         if (hit.collider && !hit.collider.gameObject.GetComponent<ControlSphere>())
                         {
-                            FindObjectOfType<ControlSphereStack>().target = hit.collider.gameObject;
+                            FindObjectOfType<ControlSphereStack>().SetControlTarget(hit.collider.gameObject);
                         }
                     }
 
