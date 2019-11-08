@@ -35,24 +35,7 @@ public class ControlSphere : MonoBehaviour
 
         corner0 = Camera.main.WorldToScreenPoint(corner0);
         corner1 = Camera.main.WorldToScreenPoint(corner1);
-        /*
-        if(corner0.y < 0 || corner1.y < 0)
-        {
-            transform.localPosition = transform.localPosition + (transform.up * Time.deltaTime);
-        }
-        if (corner0.y > Screen.height || corner1.y > Screen.height)
-        {
-            transform.localPosition = transform.localPosition - (transform.up * Time.deltaTime);
-        }
-        if (corner0.x < 0 || corner1.x < 0)
-        {
-            transform.localPosition = transform.localPosition + (transform.right * Time.deltaTime);
-        }
-        if (corner0.x > Screen.width || corner1.x > Screen.width)
-        {
-            transform.localPosition = transform.localPosition - (transform.right * Time.deltaTime);
-        }
-        */
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log(name + " " + corner0 + " " + corner1);
