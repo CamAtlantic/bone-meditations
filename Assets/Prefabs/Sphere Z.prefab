@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1629726515640337539}
-  - component: {fileID: 1629726515640337538}
-  - component: {fileID: 1629726515640337537}
   - component: {fileID: 1629726515640337536}
   - component: {fileID: 5628286059004387529}
   m_Layer: 9
@@ -33,24 +31,90 @@ Transform:
   m_Children:
   - {fileID: 5628286059574728702}
   - {fileID: 5628286058444169941}
+  - {fileID: 8520173041728685275}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1629726515640337538
+--- !u!135 &1629726515640337536
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629726515640337543}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5628286059004387529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629726515640337543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17247c492f418a64494130cb9b85e289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: 0
+  defaultColor: {r: 0, g: 2.1333334, b: 4, a: 0.5019608}
+  selectedColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedScale: 2
+  selectionAnimSecondsMax: 0.08
+  axisLine: {fileID: 0}
+  sphere: {fileID: 0}
+--- !u!1 &2375799011234737707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8520173041728685275}
+  - component: {fileID: 4450078752225051945}
+  - component: {fileID: 3144862036782628143}
+  - component: {fileID: 657693603971227353}
+  m_Layer: 9
+  m_Name: Sphere Z
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8520173041728685275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375799011234737707}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1629726515640337539}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4450078752225051945
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629726515640337543}
+  m_GameObject: {fileID: 2375799011234737707}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1629726515640337537
+--- !u!23 &3144862036782628143
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629726515640337543}
+  m_GameObject: {fileID: 2375799011234737707}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,36 +146,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &1629726515640337536
+--- !u!135 &657693603971227353
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629726515640337543}
+  m_GameObject: {fileID: 2375799011234737707}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5628286059004387529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629726515640337543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17247c492f418a64494130cb9b85e289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultColor: {r: 0, g: 2.1333334, b: 4, a: 0.5019608}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  selectedScale: 2
-  selectionAnimSecondsMax: 0.08
-  axis: {fileID: 5628286059574728701}
 --- !u!1 &5628286058444169942
 GameObject:
   m_ObjectHideFlags: 0

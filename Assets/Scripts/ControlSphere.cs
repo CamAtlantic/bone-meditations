@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ControlSphere : MonoBehaviour
 {
+    public enum ControlAxis { X,Y,Z}
+    public ControlAxis axis = ControlAxis.X;
+
     [ColorUsage(true,true)]
     public Color defaultColor;
     [ColorUsage(true, true)]
@@ -20,18 +23,19 @@ public class ControlSphere : MonoBehaviour
     float selectionAnimSeconds;
     public float selectionAnimSecondsMax = 0.2f;
 
-    public LineRenderer axis;
+    public LineRenderer axisLine;
+    public GameObject sphere;
 
     private void Start()
     {
-        mat = GetComponent<Renderer>().material;
+        mat = sphere.GetComponent<Renderer>().material;
         normalScale = transform.localScale;
     }
 
     private void Update()
     {
-        Vector3 corner0 = axis.transform.TransformPoint( axis.GetPosition(0) );
-        Vector3 corner1 = axis.transform.TransformPoint(axis.GetPosition(1));
+        Vector3 corner0 = axisLine.transform.TransformPoint( axisLine.GetPosition(0) );
+        Vector3 corner1 = axisLine.transform.TransformPoint(axisLine.GetPosition(1));
 
         corner0 = Camera.main.WorldToScreenPoint(corner0);
         corner1 = Camera.main.WorldToScreenPoint(corner1);
@@ -77,6 +81,22 @@ public class ControlSphere : MonoBehaviour
         held = false;
     }
 
+    public void OnDrag(Vector3 delta)
+    {
+        switch (axis)
+        {
+            case ControlAxis.X:
+                sphere.transform.localPosition = new Vector3(-delta.x * 0.01f, 0, 0);
+                break;
+            case ControlAxis.Y:
+                break;
+            case ControlAxis.Z:
+                break;
+            default:
+                break;
+        }
+    }
+
     //=====================
     void OnTouchDown()
     {
@@ -96,13 +116,5 @@ public class ControlSphere : MonoBehaviour
     }
 
     //================
-
-    void Rotate(Vector2 rotationVector)
-    {
-        //had to reverse the X and Y and do -Y for some reason here but it kinda works!
-        Vector2 newVector = new Vector2(rotationVector.y, -rotationVector.x);
-
-        transform.parent.Rotate(newVector*rotationSpeed,Space.World);
-    }
 
 }

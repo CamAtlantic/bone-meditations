@@ -80,10 +80,11 @@ public class TouchInputController : MonoBehaviour
                 interactions[0] = new Interaction(hitObject, thisFrameScreenPos);
                 interactions[0].target.SendMessage("StartInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
 
+                /*
                 if (hitObject.GetComponent<ControlSphere>() == false)
                 {
 
-                    FindObjectOfType<ControlSphereStack>().SetControlTarget( hit.collider.gameObject);
+                    //FindObjectOfType<SphereHalo>().SetControlTarget( hit.collider.gameObject);
 
                     //hacking this to make it toggle between two virtual cameras
                     if (LookCamA.Priority <10)
@@ -103,6 +104,7 @@ public class TouchInputController : MonoBehaviour
                     staticVCam.Priority = 1;
 
                 }
+                */
             }
         }
 
@@ -113,6 +115,10 @@ public class TouchInputController : MonoBehaviour
             if (interactions[0].target)
             {
                 //Notify the target it is being HELD
+                if (interactions[0].target.GetComponent<ControlSphere>())
+                {
+                    interactions[0].target.GetComponent<ControlSphere>().OnDrag(interactions[0].startScreenPos - thisFrameScreenPos);
+                }
             }
             else
             {
