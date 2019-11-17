@@ -5,6 +5,19 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Cinemachine;
 
+public struct Interaction
+{
+    public GameObject target;
+    public Vector3 startScreenPos;
+    public Vector3 thisFrameScreenPos;
+    public Interaction(GameObject target, Vector3 startScreenPos)
+    {
+        this.target = target;
+        this.startScreenPos = startScreenPos;
+        thisFrameScreenPos = startScreenPos;
+    }
+}
+
 public class TouchInputController : MonoBehaviour
 {
 
@@ -25,20 +38,7 @@ public class TouchInputController : MonoBehaviour
     public CinemachineVirtualCamera LookCamA;
     public CinemachineVirtualCamera LookCamB;
 
-    public struct Interaction
-    {
-        public GameObject target;
-        public Vector3 startScreenPos;
-        public Interaction(GameObject target, Vector3 startScreenPos)
-        {
-            this.target = target;
-            this.startScreenPos = startScreenPos;
-        }
-    }
-
     public Interaction[] interactions = new Interaction[10];
-
-
 
     //Tap check variables
     float tapDuration = 0.2f;
@@ -54,6 +54,14 @@ public class TouchInputController : MonoBehaviour
 
     void Update()
     {
+        //This is pretty unnecessary for the mouse version but will be necessary for multi-touch
+        for (int i = 0; i < interactions.Length; i++)
+        {
+            interactions[i].thisFrameScreenPos = Input.mousePosition;
+        }
+
+
+
         Vector3 thisFrameScreenPos = Input.mousePosition;
 
         //increment & check if the hold time is longer than a tap
@@ -71,6 +79,7 @@ public class TouchInputController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(thisFrameScreenPos);
             RaycastHit hit;
             Physics.Raycast(ray, out hit, 20, touchInputMask);
+            //===============
 
             //if the raycast hit something
             if (hit.collider)
@@ -78,15 +87,16 @@ public class TouchInputController : MonoBehaviour
                 GameObject hitObject = hit.collider.gameObject;
 
                 interactions[0] = new Interaction(hitObject, thisFrameScreenPos);
-                interactions[0].target.SendMessage("StartInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
+                interactions[0].target.SendMessageUpwards("StartInteraction", SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
 
-                /*
-                if (hitObject.GetComponent<ControlSphere>() == false)
+                Debug.Log(hitObject.name);
+                if (hitObject.GetComponentInParent<ControlSphere>() == false)
                 {
 
-                    //FindObjectOfType<SphereHalo>().SetControlTarget( hit.collider.gameObject);
+                    FindObjectOfType<SphereHalo>().SetControlTarget(hit.collider.gameObject);
 
                     //hacking this to make it toggle between two virtual cameras
+                    /*
                     if (LookCamA.Priority <10)
                     {
                         //enable cam
@@ -102,9 +112,9 @@ public class TouchInputController : MonoBehaviour
                         LookCamA.Priority = 1;
                     }
                     staticVCam.Priority = 1;
-
+                    */
                 }
-                */
+
             }
         }
 
@@ -114,16 +124,17 @@ public class TouchInputController : MonoBehaviour
             //check the interaction slot to see if there is something
             if (interactions[0].target)
             {
-                //Notify the target it is being HELD
-                if (interactions[0].target.GetComponent<ControlSphere>())
+                //Check for control sphere and do stuff if so
+                if (interactions[0].target.GetComponentInParent<ControlSphere>())
                 {
-                    interactions[0].target.GetComponent<ControlSphere>().OnDrag(interactions[0].startScreenPos - thisFrameScreenPos);
+                    interactions[0].target.GetComponentInParent<ControlSphere>().OnDrag(interactions[0]);
                 }
             }
             else
             {
                 //directly rotate the dancer
                 float mouseXDelta = Input.GetAxis("Mouse X");
+                //The below line can cause nullref if no dancer is in scene
                 Dance.danceScript.DirectRotate(mouseXDelta * mouseSpinSpeed);
             }
         }
@@ -134,12 +145,12 @@ public class TouchInputController : MonoBehaviour
             //check the interaction slot to see if there is something
             if (interactions[0].target)
             {
-                interactions[0].target.SendMessage("EndInteraction",SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
+                interactions[0].target.SendMessageUpwards("EndInteraction", SendMessageOptions.DontRequireReceiver);//Used by ControlSphere
                 interactions[0] = new Interaction();
             }
             else
             {
-                
+
                 if (tap)
                 {
                     //hack to reset cam on bg click

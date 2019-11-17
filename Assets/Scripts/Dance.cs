@@ -100,9 +100,6 @@ public class Dance : MonoBehaviour
         if(dialTarget & dialTarget != torso) dialTarget.transform.localRotation = dialTargetRotation;
 
     }
-
-
-    float deltaScale = 0.1f;
     
     public void DirectRotate(float delta)///just directly applies delta for input feels and can be used to stop spin
     {
